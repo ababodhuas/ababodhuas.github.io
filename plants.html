@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenThumb Gardens - Plant Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS */
+        .plant-hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1598882945126-2982c8da8884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+        }
+        
+        .plant-card {
+            transition: all 0.3s ease;
+        }
+        
+        .plant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .category-btn.active {
+            background-color: #16a34a;
+            color: white;
+        }
+        
+        .plant-detail-modal {
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .plant-detail-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans bg-green-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-leaf text-green-600 text-3xl mr-2"></i>
+                        <span class="text-xl font-bold text-green-800">GreenThumb</span>
+                    </div>
+                    <div class="hidden md:ml-10 md:flex md:space-x-8">
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#" class="text-green-700 border-b-2 border-green-500 px-3 py-2 text-sm font-medium">Plants</a>
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">Gardening Tips</a>
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">Shop</a>
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">About</a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-green-700">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button class="text-gray-500 hover:text-green-700">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                    </button>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">
+                        Sign In
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="text-gray-500 hover:text-green-700 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Plant Hero Section -->
+    <section class="plant-hero flex items-center justify-center text-center text-white">
+        <div class="px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Our Plant Collection</h1>
+            <p class="text-xl mb-8">Discover the perfect plants for your home and garden from our curated selection.</p>
+            <div class="relative max-w-md mx-auto">
+                <input type="text" placeholder="Search plants..." class="w-full px-6 py-3 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button class="absolute right-2 top-2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plant Categories -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-green-800 mb-4">Browse by Category</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Find plants that suit your space and lifestyle.</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="category-btn active bg-green-100 text-green-800 px-6 py-2 rounded-full font-medium hover:bg-green-200 transition duration-300">
+                    All Plants
+                </button>
+                <button class="category-btn bg-green-100 text-green-800 px-6 py-2 rounded-full font-medium hover:bg-green-200 transition duration-300">
+                    Indoor Plants
+                </button>
+                <button class="category-btn bg-green-100 text-green-800 px-6 py-2 rounded-full font-medium hover:bg-green-200 transition duration-300">
+                    Outdoor Plants
+                </button>
+                <button class="category-btn bg-green-100 text-green-800 px-6 py-2 rounded-full font-medium hover:bg-green-200 transition duration-300">
+                    Low Maintenance
+                </button>
+                <button class="category-btn bg-green-100 text-green-800 px-6 py-2 rounded-full font-medium hover:bg-green-200 transition duration-300">
+                    Pet Friendly
+                </button>
+                <button class="category-btn bg-green-100 text-green-800 px-6 py-2 rounded-full font-medium hover:bg-green-200 transition duration-300">
+                    Air Purifying
+                </button>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
+                <div class="flex items-center">
+                    <span class="text-gray-600 mr-2">Filter by:</span>
+                    <select class="bg-white border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>Light Requirements</option>
+                        <option>Low Light</option>
+                        <option>Medium Light</option>
+                        <option>Bright Light</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <select class="bg-white border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>Water Needs</option>
+                        <option>Low Water</option>
+                        <option>Moderate Water</option>
+                        <option>High Water</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <select class="bg-white border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>Sort by</option>
+                        <option>Popularity</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest Arrivals</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plant Grid -->
+    <section class="py-12 bg-green-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Plant Card 1 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1598882945126-2982c8da8884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Monstera Deliciosa" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">BESTSELLER</div>
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="monstera">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Monstera Deliciosa</h3>
+                        <p class="text-gray-500 text-sm mb-3">Swiss Cheese Plant</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-500 ml-2">(128)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-green-600 font-bold">$29.99</span>
+                                <span class="text-gray-400 text-sm line-through ml-2">$34.99</span>
+                            </div>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 2 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517191434949-5e90cd67d2b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Snake Plant" class="w-full h-full object-cover">
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="snake">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Snake Plant</h3>
+                        <p class="text-gray-500 text-sm mb-3">Sansevieria Trifasciata</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-500 ml-2">(256)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$24.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 3 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Peace Lily" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">LOW LIGHT</div>
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="peace">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Peace Lily</h3>
+                        <p class="text-gray-500 text-sm mb-3">Spathiphyllum</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-500 ml-2">(87)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$19.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 4 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1453904300235-0f2f60b15b5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Fiddle Leaf Fig" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">TRENDING</div>
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="fiddle">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Fiddle Leaf Fig</h3>
+                        <p class="text-gray-500 text-sm mb-3">Ficus Lyrata</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-500 ml-2">(142)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$34.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 5 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Rubber Plant" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">AIR PURIFYING</div>
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="rubber">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Rubber Plant</h3>
+                        <p class="text-gray-500 text-sm mb-3">Ficus Elastica</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-500 ml-2">(93)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$27.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 6 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=80" alt="Aloe Vera" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">PET FRIENDLY</div>
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="aloe">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Aloe Vera</h3>
+                        <p class="text-gray-500 text-sm mb-3">Aloe Barbadensis</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-500 ml-2">(176)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$16.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 7 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="ZZ Plant" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">LOW MAINTENANCE</div>
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="zz">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">ZZ Plant</h3>
+                        <p class="text-gray-500 text-sm mb-3">Zamioculcas Zamiifolia</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-500 ml-2">(201)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$22.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 8 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1580229080433-ea5802444e79?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Pothos" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">EASY CARE</div>
+                        <button class="absolute bottom-2 right-2 bg-white text-green-600 p-2 rounded-full shadow-md hover:bg-green-100 view-detail-btn" data-plant="pothos">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Golden Pothos</h3>
+                        <p class="text-gray-500 text-sm mb-3">Epipremnum Aureum</p>
+                        <div class="flex items-center text-yellow-400 mb-3 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-500 ml-2">(189)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$18.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center">
+                    Load More Plants <i class="fas fa-chevron-down ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plant Care Tips -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-green-800 mb-4">Plant Care Tips</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Learn how to keep your plants happy and healthy with our expert advice.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-green-50 rounded-xl overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Watering plants" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-green-800 mb-3">Watering Guide</h3>
+                        <p class="text-gray-600 mb-4">Learn the signs of overwatering and underwatering, and how to establish the perfect watering routine for each plant type.</p>
+                        <a href="#" class="text-green-600 font-medium hover:text-green-800 inline-flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-green-50 rounded-xl overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517191434949-5e90cd67d2b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Light requirements" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-green-800 mb-3">Light Requirements</h3>
+                        <p class="text-gray-600 mb-4">Understand the different light needs of plants and how to position them in your home for optimal growth.</p>
+                        <a href="#" class="text-green-600 font-medium hover:text-green-800 inline-flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-green-50 rounded-xl overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1598882945126-2982c8da8884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Plant propagation" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-green-800 mb-3">Propagation Techniques</h3>
+                        <p class="text-gray-600 mb-4">Discover how to multiply your plant collection through various propagation methods like stem cuttings and division.</p>
+                        <a href="#" class="text-green-600 font-medium hover:text-green-800 inline-flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plant Detail Modal -->
+    <div class="plant-detail-modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="relative">
+                <button class="close-modal absolute top-4 right-4 bg-white text-gray-600 p-2 rounded-full shadow-md hover:bg-gray-100 z-10">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="h-64 lg:h-full">
+                        <img id="modal-plant-image" src="https://images.unsplash.com/photo-1598882945126-2982c8da8884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Plant" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="p-6">
+                        <h2 id="modal-plant-name" class="text-2xl font-bold text-green-800 mb-2">Monstera Deliciosa</h2>
+                        <p id="modal-plant-scientific" class="text-gray-500 text-sm mb-4">Swiss Cheese Plant</p>
+                        
+                        <div class="flex items-center text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-500 ml-2 text-sm">(128 reviews)</span>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <span class="text-green-600 font-bold text-xl">$29.99</span>
+                            <span class="text-gray-400 text-sm line-through ml-2">$34.99</span>
+                        </div>
+                        
+                        <p id="modal-plant-description" class="text-gray-700 mb-6">
+                            The Monstera Deliciosa, also known as the Swiss Cheese Plant, is a tropical favorite with its large, glossy leaves that develop unique splits and holes as they mature. This easy-care plant adds a dramatic tropical feel to any space and is perfect for both beginners and experienced plant parents.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-sun text-green-600 mr-2"></i>
+                                    <span class="font-medium">Light</span>
+                                </div>
+                                <p id="modal-plant-light" class="text-sm text-gray-600 mt-1">Bright, indirect light</p>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-tint text-green-600 mr-2"></i>
+                                    <span class="font-medium">Water</span>
+                                </div>
+                                <p id="modal-plant-water" class="text-sm text-gray-600 mt-1">When top 2" of soil is dry</p>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-paw text-green-600 mr-2"></i>
+                                    <span class="font-medium">Pet Friendly</span>
+                                </div>
+                                <p id="modal-plant-pet" class="text-sm text-gray-600 mt-1">Toxic to pets</p>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-expand text-green-600 mr-2"></i>
+                                    <span class="font-medium">Size</span>
+                                </div>
+                                <p id="modal-plant-size" class="text-sm text-gray-600 mt-1">Can grow 6-8 feet tall</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="flex items-center border border-gray-300 rounded-md mr-4">
+                                <button class="px-3 py-1 text-gray-600 hover:bg-gray-100">-</button>
+                                <span class="px-3">1</span>
+                                <button class="px-3 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                            </div>
+                            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 flex-grow">
+                                <i class="fas fa-cart-plus mr-2"></i> Add to Cart
+                            </button>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-4">
+                            <h3 class="font-semibold text-green-800 mb-2">Care Instructions</h3>
+                            <ul id="modal-plant-care" class="text-gray-700 text-sm space-y-2 list-disc pl-5">
+                                <li>Water when the top 2 inches of soil feel dry</li>
+                                <li>Prefers bright, indirect light but can tolerate medium light</li>
+                                <li>Wipe leaves with a damp cloth to remove dust</li>
+                                <li>Fertilize monthly during growing season (spring-summer)</li>
+                                <li>Rotate plant periodically for even growth</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-green-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-leaf text-green-400 text-3xl mr-2"></i>
+                        <span class="text-xl font-bold">GreenThumb</span>
+                    </div>
+                    <p class="text-green-200 mb-4">Helping you grow beautiful, healthy plants since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-green-200 hover:text-green-50">All Plants</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">New Arrivals</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Seasonal Picks</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Plant Care</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Learn</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Gardening Guides</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Plant Care Tips</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Blog</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">FAQs</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Workshops</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-green-200 hover:text-green-50">About Us</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Our Story</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Sustainability</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Careers</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-green-300 text-sm mb-4 md:mb-0">© 2023 GreenThumb Gardens. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-green-300 hover:text-white text-sm">Privacy Policy</a>
+                        <a href="#" class="text-green-300 hover:text-white text-sm">Terms of Service</a>
+                        <a href="#" class="text-green-300 hover:text-white text-sm">Shipping Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Plant data for the modal
+        const plantData = {
+            monstera: {
+                name: "Monstera Deliciosa",
+                scientific: "Swiss Cheese Plant",
+                price: "$29.99",
+                originalPrice: "$34.99",
+                description: "The Monstera Deliciosa, also known as the Swiss Cheese Plant, is a tropical favorite with its large, glossy leaves that develop unique splits and holes as they mature. This easy-care plant adds a dramatic tropical feel to any space and is perfect for both beginners and experienced plant parents.",
+                light: "Bright, indirect light",
+                water: "When top 2\" of soil is dry",
+                pet: "Toxic to pets",
+                size: "Can grow 6-8 feet tall",
+                care: [
+                    "Water when the top 2 inches of soil feel dry",
+                    "Prefers bright, indirect light but can tolerate medium light",
+                    "Wipe leaves with a damp cloth to remove dust",
+                    "Fertilize monthly during growing season (spring-summer)",
+                    "Rotate plant periodically for even growth"
+                ],
+                image: "https://images.unsplash.com/photo-1598882945126-2982c8da8884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+                reviews: "128"
+            },
+            snake: {
+                name: "Snake Plant",
+                scientific: "Sansevieria Trifasciata",
+                price: "$24.99",
+                originalPrice: "",
+                description: "The Snake Plant, also known as Mother-in-Law's Tongue, is one of the most resilient houseplants you can find. It thrives on neglect and is perfect for beginners. Its tall, upright leaves with striking patterns make it a stylish addition to any room.",
+                light: "Low to bright indirect light",
+                water: "Every 2-6 weeks",
+                pet: "Toxic to pets",
+                size: "Can grow 2-4 feet tall",
+                care: [
+                    "Water sparingly - allow soil to dry completely between waterings",
+                    "Tolerates low light but grows faster in bright, indirect light",
+                    "Very drought tolerant - perfect for forgetful waterers",
+                    "Fertilize 1-2 times during growing season",
+                    "Great for improving indoor air quality"
+                ],
+                image: "https://images.unsplash.com/photo-1517191434949-5e90cd67d2b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+                reviews: "256"
+            },
+            peace: {
+                name: "Peace Lily",
+                scientific: "Spathiphyllum",
+                price: "$19.99",
+                originalPrice: "",
+                description: "The Peace Lily is a popular choice for its beautiful white blooms and air-purifying qualities. It's relatively easy to care for and will tell you when it needs water by drooping slightly, making it perfect for beginners.",
+                light: "Low to medium indirect light",
+                water: "When soil is slightly dry",
+                pet: "Toxic to pets",
+                size: "Typically 1-4 feet tall",
+                care: [
+                    "Water when the leaves begin to droop slightly",
+                    "Prefers low to medium indirect light - avoid direct sun",
+                    "Mist leaves regularly or place on a pebble tray for humidity",
+                    "Wipe leaves to keep them dust-free",
+                    "Remove spent flowers to encourage new blooms"
+                ],
+                image: "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+                reviews: "87"
+            },
+            fiddle: {
+                name: "Fiddle Leaf Fig",
+                scientific: "Ficus Lyrata",
+                price: "$34.99",
+                originalPrice: "",
+                description: "The Fiddle Leaf Fig has become an interior design staple with its large, violin-shaped leaves. While it requires a bit more attention than some houseplants, its dramatic appearance makes it worth the effort.",
+                light: "Bright, indirect light",
+                water: "When top 1-2\" of soil is dry",
+                pet: "Toxic to pets",
+                size: "Can grow up to 10 feet indoors",
+                care: [
+                    "Water thoroughly when top 1-2 inches of soil are dry",
+                    "Needs bright, indirect light - rotate regularly for even growth",
+                    "Keep away from drafts and sudden temperature changes",
+                    "Wipe leaves monthly to remove dust",
+                    "Fertilize monthly during growing season"
+                ],
+                image: "https://images.unsplash.com/photo-1453904300235-0f2f60b15b5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+                reviews: "142"
+            },
+            rubber: {
+                name: "Rubber Plant",
+                scientific: "Ficus Elastica",
+                price: "$27.99",
+                originalPrice: "",
+                description: "The Rubber Plant is a hardy variety with thick, glossy leaves that range from deep green to burgundy. It's an excellent air purifier and adds a bold, architectural element to any space.",
+                light: "Bright, indirect light",
+                water: "When top 2\" of soil is dry",
+                pet: "Toxic to pets",
+                size: "Can grow 6-10 feet tall",
+                care: [
+                    "Water when top 2 inches of soil are dry",
+                    "Prefers bright, indirect light but can tolerate medium light",
+                    "Wipe leaves with damp cloth to keep them shiny",
+                    "Prune to control height and encourage bushiness",
+                    "Fertilize monthly during growing season"
+                ],
+                image: "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+                reviews: "93"
+            },
+            aloe: {
+                name: "Aloe Vera",
+                scientific: "Aloe Barbadensis",
+                price: "$16.99",
+                originalPrice: "",
+                description: "Aloe Vera is not just a beautiful succulent - it's also a useful medicinal plant. The gel inside its leaves can be used to soothe burns and skin irritations. It's easy to care for and produces offsets (baby plants) that you can propagate.",
+                light: "Bright, indirect light",
+                water: "Every 3 weeks",
+                pet: "Mildly toxic to pets",
+                size: "Typically 1-2 feet tall",
+                care: [
+                    "Water deeply but infrequently - allow soil to dry completely",
+                    "Prefers bright light - can tolerate some direct sun",
+                    "Use well-draining cactus/succulent soil mix",
+                    "Harvest outer leaves for gel by cutting at the base",
+                    "Protect from temperatures below 50°F (10°C)"
+                ],
+                image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=80",
+                reviews: "176"
+            },
+            zz: {
+                name: "ZZ Plant",
+                scientific: "Zamioculcas Zamiifolia",
+                price: "$22.99",
+                originalPrice: "",
+                description: "The ZZ Plant is nearly indestructible, making it perfect for beginners or those with less-than-ideal growing conditions. Its glossy, dark green leaves grow on graceful, arching stems that add a modern touch to any space.",
+                light: "Low to bright indirect light",
+                water: "Every 2-3 weeks",
+                pet: "Toxic to pets",
+                size: "Typically 2-3 feet tall",
+                care: [
+                    "Water every 2-3 weeks - very drought tolerant",
+                    "Thrives in low light but grows faster in bright, indirect light",
+                    "Use well-draining soil to prevent root rot",
+                    "Dust leaves occasionally to keep them shiny",
+                    "Fertilize 1-2 times per year"
+                ],
+                image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+                reviews: "201"
+            },
+            pothos: {
+                name: "Golden Pothos",
+                scientific: "Epipremnum Aureum",
+                price: "$18.99",
+                originalPrice: "",
+                description: "The Golden Pothos is one of the easiest houseplants to grow. Its heart-shaped leaves with golden variegation trail beautifully from hanging baskets or climb up supports. It's an excellent choice for beginners and is very forgiving of neglect.",
+                light: "Low to bright indirect light",
+                water: "When soil is dry",
+                pet: "Toxic to pets",
+                size: "Trails up to 10 feet",
+                care: [
+                    "Water when soil feels dry to the touch",
+                    "Tolerates low light but variegation is more pronounced in brighter light",
+                    "Prune regularly to encourage bushiness",
+                    "Can be easily propagated in water",
+                    "Fertilize monthly during growing season"
+                ],
+                image: "https://images.unsplash.com/photo-1580229080433-ea5802444e79?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+                reviews: "189"
+            }
+        };
+
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.querySelector('.plant-detail-modal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const viewDetailBtns = document.querySelectorAll('.view-detail-btn');
+            
+            // Show modal when view detail button is clicked
+            viewDetailBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const plantId = this.getAttribute('data-plant');
+                    const plant = plantData[plantId];
+                    
+                    // Populate modal with plant data
+                    document.getElementById('modal-plant-name').textContent = plant.name;
+                    document.getElementById('modal-plant-scientific').textContent = plant.scientific;
+                    document.getElementById('modal-plant-description').textContent = plant.description;
+                    document.getElementById('modal-plant-light').textContent = plant.light;
+                    document.getElementById('modal-plant-water').textContent = plant.water;
+                    document.getElementById('modal-plant-pet').textContent = plant.pet;
+                    document.getElementById('modal-plant-size').textContent = plant.size;
+                    document.getElementById('modal-plant-image').src = plant.image;
+                    
+                    const priceElement = document.getElementById('modal-plant-price');
+                    priceElement.innerHTML = `<span class="text-green-600 font-bold text-xl">${plant.price}</span>`;
+                    if (plant.originalPrice) {
+                        priceElement.innerHTML += `<span class="text-gray-400 text-sm line-through ml-2">${plant.originalPrice}</span>`;
+                    }
+                    
+                    const careList = document.getElementById('modal-plant-care');
+                    careList.innerHTML = '';
+                    plant.care.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        careList.appendChild(li);
+                    });
+                    
+                    // Show modal
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Close modal
+            closeModalBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Category filter buttons
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(b => b.classList.remove('active', 'bg-green-600', 'text-white'));
+                    this.classList.add('active', 'bg-green-600', 'text-white');
+                    this.classList.remove('bg-green-100', 'text-green-800', 'hover:bg-green-200');
+                    
+                    // In a real implementation, you would filter plants here
+                });
+            });
+            
+            // Animation for plant cards
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.plant-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

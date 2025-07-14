@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenThumb Gardens - Cultivate Your Green Paradise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS */
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+        }
+        
+        .plant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .plant-card {
+            transition: all 0.3s ease;
+        }
+        
+        .seasonal-banner {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1516259764231-1de19dfd2a7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .footer-links a:hover {
+            color: #4ade80;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Gardening Tips Custom CSS */
+        .tip-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tip-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .tip-image {
+            height: 200px;
+            transition: transform 0.5s ease;
+        }
+        
+        .tip-card:hover .tip-image {
+            transform: scale(1.05);
+        }
+        
+        .expert-badge {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #10b981;
+            color: white;
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .tab-button:hover:not(.active) {
+            background-color: #d1fae5;
+        }
+    </style>
+</head>
+<body class="font-sans bg-green-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-leaf text-green-600 text-3xl mr-2"></i>
+                        <span class="text-xl font-bold text-green-800">GreenThumb</span>
+                    </div>
+                    <div class="hidden md:ml-10 md:flex md:space-x-8">
+                        <a href="#" class="text-green-700 border-b-2 border-green-500 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">Plants</a>
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">Gardening Tips</a>
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">Shop</a>
+                        <a href="#" class="text-gray-500 hover:text-green-700 px-3 py-2 text-sm font-medium">About</a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-green-700">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button class="text-gray-500 hover:text-green-700">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                    </button>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">
+                        Sign In
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="text-gray-500 hover:text-green-700 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section flex items-center justify-center text-center text-white">
+        <div class="px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Cultivate Your Green Paradise</h1>
+            <p class="text-xl md:text-2xl mb-8">Discover the joy of gardening with our expert tips, premium plants, and community support.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300">
+                    Shop Plants
+                </button>
+                <button class="bg-white hover:bg-gray-100 text-green-700 font-bold py-3 px-6 rounded-lg text-lg transition duration-300">
+                    Learn Gardening
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-green-800 mb-4">Why Choose GreenThumb?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We provide everything you need to create and maintain a beautiful garden, whether you're a beginner or an experienced gardener.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-green-50 p-8 rounded-xl text-center hover:bg-green-100 transition duration-300">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-seedling text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-green-800 mb-3">Premium Quality Plants</h3>
+                    <p class="text-gray-600">We source only the healthiest plants from trusted growers to ensure your garden thrives.</p>
+                </div>
+                
+                <div class="bg-green-50 p-8 rounded-xl text-center hover:bg-green-100 transition duration-300">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-book text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-green-800 mb-3">Expert Gardening Advice</h3>
+                    <p class="text-gray-600">Access our library of guides and get personalized advice from our team of gardening experts.</p>
+                </div>
+                
+                <div class="bg-green-50 p-8 rounded-xl text-center hover:bg-green-100 transition duration-300">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-truck text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-green-800 mb-3">Fast & Safe Delivery</h3>
+                    <p class="text-gray-600">Our plants are carefully packaged and delivered quickly to ensure they arrive in perfect condition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Plants Section -->
+    <section class="py-16 bg-green-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-green-800 mb-4">Popular Plants This Season</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">These plants are perfect for your garden right now. Browse our selection and find your new favorites.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Plant Card 1 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1598882945126-2982c8da8884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Monstera Deliciosa" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">BESTSELLER</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Monstera Deliciosa</h3>
+                        <p class="text-gray-500 text-sm mb-3">Swiss Cheese Plant</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$29.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 2 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517191434949-5e90cd67d2b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Snake Plant" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Snake Plant</h3>
+                        <p class="text-gray-500 text-sm mb-3">Sansevieria Trifasciata</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$24.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 3 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Peace Lily" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">LOW LIGHT</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Peace Lily</h3>
+                        <p class="text-gray-500 text-sm mb-3">Spathiphyllum</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$19.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plant Card 4 -->
+                <div class="plant-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1453904300235-0f2f60b15b5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Fiddle Leaf Fig" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">TRENDING</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-1">Fiddle Leaf Fig</h3>
+                        <p class="text-gray-500 text-sm mb-3">Ficus Lyrata</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-600 font-bold">$34.99</span>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-cart-plus mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <button class="bg-white text-green-700 border-2 border-green-600 font-bold py-3 px-8 rounded-lg hover:bg-green-50 transition duration-300">
+                    View All Plants
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gardening Tips Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-green-800 mb-4">Expert Gardening Tips</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Learn from our horticulturists and master gardeners to help your plants thrive in any season.</p>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button class="tab-button active px-4 py-2 rounded-full border border-green-600 text-green-600 font-medium">
+                    All Tips
+                </button>
+                <button class="tab-button px-4 py-2 rounded-full border border-green-600 text-green-600 font-medium">
+                    <i class="fas fa-leaf mr-2"></i> Houseplants
+                </button>
+                <button class="tab-button px-4 py-2 rounded-full border border-green-600 text-green-600 font-medium">
+                    <i class="fas fa-seedling mr-2"></i> Vegetables
+                </button>
+                <button class="tab-button px-4 py-2 rounded-full border border-green-600 text-green-600 font-medium">
+                    <i class="fas fa-spa mr-2"></i> Flowers
+                </button>
+                <button class="tab-button px-4 py-2 rounded-full border border-green-600 text-green-600 font-medium">
+                    <i class="fas fa-tree mr-2"></i> Trees & Shrubs
+                </button>
+                <button class="tab-button px-4 py-2 rounded-full border border-green-600 text-green-600 font-medium">
+                    <i class="fas fa-bug mr-2"></i> Pest Control
+                </button>
+            </div>
+            
+            <!-- Featured Tip -->
+            <div class="bg-green-50 rounded-xl overflow-hidden mb-12 shadow-lg">
+                <div class="md:flex">
+                    <div class="md:w-1/2 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Watering plants" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                        <span class="tip-category bg-green-600 text-white">Featured</span>
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Expert" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Dr. Emily Parker</h4>
+                                <p class="text-sm text-gray-500">Master Horticulturist</p>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-800 mb-4">The Right Way to Water Your Plants</h3>
+                        <p class="text-gray-600 mb-4">Watering seems simple, but doing it wrong is the #1 cause of houseplant death. Learn the signs of overwatering and underwatering, the best times to water, and techniques for different plant types.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Watering</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Houseplants</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Beginner</span>
+                        </div>
+                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                            Read Full Guide
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tips Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tip 1 -->
+                <div class="tip-card bg-white rounded-xl overflow-hidden shadow-md relative">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516259764231-1de19dfd2a7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Pruning shears" 
+                             class="tip-image w-full object-cover">
+                        <span class="tip-category bg-yellow-500 text-white">Seasonal</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-3">Summer Pruning Guide</h3>
+                        <p class="text-gray-600 mb-4">Learn which plants benefit from summer pruning and how to do it properly without stressing your plants.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                                    <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Expert" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-sm text-gray-600">Mark Johnson</span>
+                            </div>
+                            <span class="text-sm text-gray-500">5 min read</span>
+                        </div>
+                    </div>
+                    <div class="expert-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                
+                <!-- Tip 2 -->
+                <div class="tip-card bg-white rounded-xl overflow-hidden shadow-md relative">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517191434949-5e90cd67d2b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Organic fertilizer" 
+                             class="tip-image w-full object-cover">
+                        <span class="tip-category bg-blue-500 text-white">Soil Health</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-3">Organic Fertilizers Explained</h3>
+                        <p class="text-gray-600 mb-4">Compare different organic fertilizers and learn when and how to use each for optimal plant growth.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                                    <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Expert" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-sm text-gray-600">Sarah Chen</span>
+                            </div>
+                            <span class="text-sm text-gray-500">8 min read</span>
+                        </div>
+                    </div>
+                    <div class="expert-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                
+                <!-- Tip 3 -->
+                <div class="tip-card bg-white rounded-xl overflow-hidden shadow-md relative">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" 
+                             alt="Propagating plants" 
+                             class="tip-image w-full object-cover">
+                        <span class="tip-category bg-purple-500 text-white">Propagation</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-3">Plant Propagation Methods</h3>
+                        <p class="text-gray-600 mb-4">Step-by-step guide to propagating your favorite plants from cuttings, division, and other methods.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Expert" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-sm text-gray-600">David Kim</span>
+                            </div>
+                            <span class="text-sm text-gray-500">10 min read</span>
+                        </div>
+                    </div>
+                    <div class="expert-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                
+                <!-- Tip 4 -->
+                <div class="tip-card bg-white rounded-xl overflow-hidden shadow-md relative">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1598882945126-2982c8da8884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Pest control" 
+                             class="tip-image w-full object-cover">
+                        <span class="tip-category bg-red-500 text-white">Pest Control</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-3">Natural Pest Solutions</h3>
+                        <p class="text-gray-600 mb-4">Discover effective, chemical-free ways to combat common garden pests without harming beneficial insects.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                                    <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Expert" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-sm text-gray-600">Lisa Rodriguez</span>
+                            </div>
+                            <span class="text-sm text-gray-500">7 min read</span>
+                        </div>
+                    </div>
+                    <div class="expert-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                
+                <!-- Tip 5 -->
+                <div class="tip-card bg-white rounded-xl overflow-hidden shadow-md relative">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Container gardening" 
+                             class="tip-image w-full object-cover">
+                        <span class="tip-category bg-indigo-500 text-white">Urban Gardening</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-3">Small Space Gardening</h3>
+                        <p class="text-gray-600 mb-4">Maximize your balcony or patio with these space-saving gardening techniques and plant recommendations.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                                    <img src="https://randomuser.me/api/portraits/men/28.jpg" alt="Expert" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-sm text-gray-600">Michael Brown</span>
+                            </div>
+                            <span class="text-sm text-gray-500">6 min read</span>
+                        </div>
+                    </div>
+                    <div class="expert-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                
+                <!-- Tip 6 -->
+                <div class="tip-card bg-white rounded-xl overflow-hidden shadow-md relative">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1453904300235-0f2f60b15b5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Compost bin" 
+                             class="tip-image w-full object-cover">
+                        <span class="tip-category bg-amber-500 text-white">Sustainability</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-3">Composting 101</h3>
+                        <p class="text-gray-600 mb-4">Turn kitchen scraps and yard waste into garden gold with this beginner's guide to composting.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                                    <img src="https://randomuser.me/api/portraits/women/62.jpg" alt="Expert" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-sm text-gray-600">Emma Wilson</span>
+                            </div>
+                            <span class="text-sm text-gray-500">9 min read</span>
+                        </div>
+                    </div>
+                    <div class="expert-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                    View All Gardening Tips
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seasonal Banner -->
+    <section class="seasonal-banner py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white bg-opacity-90 rounded-xl p-8 md:p-12 shadow-lg">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <h2 class="text-3xl font-bold text-green-800 mb-4">Summer Gardening Essentials</h2>
+                        <p class="text-gray-700 mb-6">Prepare your garden for the summer season with our specially curated collection of heat-resistant plants, watering solutions, and sun protection accessories.</p>
+                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                            Shop Summer Collection
+                        </button>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-100 p-4 rounded-lg flex items-center">
+                                <i class="fas fa-sun text-yellow-500 text-2xl mr-3"></i>
+                                <span class="font-medium">Drought-resistant plants</span>
+                            </div>
+                            <div class="bg-green-100 p-4 rounded-lg flex items-center">
+                                <i class="fas fa-tint text-blue-500 text-2xl mr-3"></i>
+                                <span class="font-medium">Self-watering systems</span>
+                            </div>
+                            <div class="bg-green-100 p-4 rounded-lg flex items-center">
+                                <i class="fas fa-umbrella-beach text-orange-500 text-2xl mr-3"></i>
+                                <span class="font-medium">Shade solutions</span>
+                            </div>
+                            <div class="bg-green-100 p-4 rounded-lg flex items-center">
+                                <i class="fas fa-bug text-red-500 text-2xl mr-3"></i>
+                                <span class="font-medium">Pest control</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-green-800 mb-4">What Our Customers Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Join thousands of happy gardeners who have transformed their spaces with our help.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah J." class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Sarah J.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"The Monstera I bought arrived in perfect condition and has grown so much in just a few months! The care guide that came with it was incredibly helpful."</p>
+                </div>
+                
+                <div class="testimonial-card p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T." class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Michael T.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"As a beginner gardener, I was nervous about keeping plants alive. GreenThumb's beginner-friendly plants and detailed care instructions made all the difference."</p>
+                </div>
+                
+                <div class="testimonial-card p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Priya K." class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Priya K.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Their customer service is exceptional. When I had questions about repotting, they responded within hours with detailed advice tailored to my specific plant."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-green-800 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="floating-icon inline-block mb-6">
+                <i class="fas fa-envelope text-4xl text-green-300"></i>
+            </div>
+            <h2 class="text-3xl font-bold mb-4">Join Our Gardening Community</h2>
+            <p class="text-green-100 mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for seasonal gardening tips, exclusive offers, and new plant arrivals.</p>
+            
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg transition duration-300">
+                    Subscribe
+                </button>
+            </form>
+            
+            <p class="text-green-200 text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-leaf text-green-400 text-3xl mr-2"></i>
+                        <span class="text-xl font-bold">GreenThumb</span>
+                    </div>
+                    <p class="text-green-200 mb-4">Helping you grow beautiful, healthy plants since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="text-green-300 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2 footer-links">
+                        <li><a href="#" class="text-green-200 hover:text-green-50">All Plants</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">New Arrivals</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Seasonal Picks</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Plant Care</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Learn</h3>
+                    <ul class="space-y-2 footer-links">
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Gardening Guides</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Plant Care Tips</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Blog</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">FAQs</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Workshops</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 footer-links">
+                        <li><a href="#" class="text-green-200 hover:text-green-50">About Us</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Our Story</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Sustainability</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Careers</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-green-50">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-green-300 text-sm mb-4 md:mb-0">© 2023 GreenThumb Gardens. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-green-300 hover:text-white text-sm">Privacy Policy</a>
+                        <a href="#" class="text-green-300 hover:text-white text-sm">Terms of Service</a>
+                        <a href="#" class="text-green-300 hover:text-white text-sm">Shipping Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation to plant cards on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.plant-card, .tip-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab-button');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    // In a real implementation, you would filter content here
+                });
+            });
+            
+            // Mobile menu toggle would go here in a real implementation
+        });
+    </script>
+</body>
+</html>
